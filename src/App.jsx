@@ -1,27 +1,21 @@
-import React from 'react'
-import { Canvas } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import React from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, useGLTF } from "@react-three/drei";
 
-function Cube() {
+const Model = () => {
+  const { scene } = useGLTF("/Soda-can.gltf"); // Ensure your model is in the public folder
+  return <primitive object={scene} scale={0.5} />;
+};
+
+const App = () => {
   return (
-    <mesh>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color="orange" />
-    </mesh>
-  )
-}
+    <Canvas camera={{ position: [0, 2, 5] }}>
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[2, 2, 2]} />
+      <Model />
+      <OrbitControls />
+    </Canvas>
+  );
+};
 
-function App() {
-  return (
-    <div style={{ width: '100vw', height: '100vh' }}>
-      <Canvas camera={{ position: [3, 3, 3] }}>
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} />
-        <Cube />
-        <OrbitControls />
-      </Canvas>
-    </div>
-  )
-}
-
-export default App
+export default App;
